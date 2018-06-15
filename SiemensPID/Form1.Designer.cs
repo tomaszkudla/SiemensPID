@@ -37,6 +37,21 @@
             this.lbOUT = new System.Windows.Forms.Label();
             this.tbOUT = new System.Windows.Forms.TextBox();
             this.timer1 = new System.Windows.Forms.Timer(this.components);
+            this.lbTlag = new System.Windows.Forms.Label();
+            this.tbTlag = new System.Windows.Forms.TextBox();
+            this.lbTi = new System.Windows.Forms.Label();
+            this.tbTi = new System.Windows.Forms.TextBox();
+            this.lbK = new System.Windows.Forms.Label();
+            this.tbK = new System.Windows.Forms.TextBox();
+            this.lbYmin = new System.Windows.Forms.Label();
+            this.tbYmin = new System.Windows.Forms.TextBox();
+            this.lbYmax = new System.Windows.Forms.Label();
+            this.tbYmax = new System.Windows.Forms.TextBox();
+            this.lbTd = new System.Windows.Forms.Label();
+            this.tbTd = new System.Windows.Forms.TextBox();
+            this.lbDeadband = new System.Windows.Forms.Label();
+            this.tbDeadband = new System.Windows.Forms.TextBox();
+            this.cbDerivative = new System.Windows.Forms.CheckBox();
             this.SuspendLayout();
             // 
             // cbHand
@@ -56,8 +71,9 @@
             this.tbPV.Name = "tbPV";
             this.tbPV.Size = new System.Drawing.Size(171, 20);
             this.tbPV.TabIndex = 1;
+            this.tbPV.Enter += new System.EventHandler(this.tbPV_Enter);
             this.tbPV.KeyDown += new System.Windows.Forms.KeyEventHandler(this.tbPV_KeyDown);
-            this.tbPV.Validated += new System.EventHandler(this.tbPV_Validated);
+            this.tbPV.Leave += new System.EventHandler(this.tbPV_Leave);
             // 
             // lbPV
             // 
@@ -107,11 +123,169 @@
             // 
             this.timer1.Tick += new System.EventHandler(this.timer1_Tick);
             // 
+            // lbTlag
+            // 
+            this.lbTlag.AutoSize = true;
+            this.lbTlag.Location = new System.Drawing.Point(162, 258);
+            this.lbTlag.Name = "lbTlag";
+            this.lbTlag.Size = new System.Drawing.Size(31, 13);
+            this.lbTlag.TabIndex = 12;
+            this.lbTlag.Text = "T lag";
+            // 
+            // tbTlag
+            // 
+            this.tbTlag.Location = new System.Drawing.Point(198, 255);
+            this.tbTlag.Name = "tbTlag";
+            this.tbTlag.Size = new System.Drawing.Size(171, 20);
+            this.tbTlag.TabIndex = 11;
+            this.tbTlag.Enter += new System.EventHandler(this.tbTlag_Enter);
+            this.tbTlag.KeyDown += new System.Windows.Forms.KeyEventHandler(this.tbTlag_KeyDown);
+            this.tbTlag.Leave += new System.EventHandler(this.tbTlag_Leave);
+            // 
+            // lbTi
+            // 
+            this.lbTi.AutoSize = true;
+            this.lbTi.Location = new System.Drawing.Point(171, 232);
+            this.lbTi.Name = "lbTi";
+            this.lbTi.Size = new System.Drawing.Size(16, 13);
+            this.lbTi.TabIndex = 10;
+            this.lbTi.Text = "Ti";
+            // 
+            // tbTi
+            // 
+            this.tbTi.Location = new System.Drawing.Point(198, 229);
+            this.tbTi.Name = "tbTi";
+            this.tbTi.Size = new System.Drawing.Size(171, 20);
+            this.tbTi.TabIndex = 9;
+            this.tbTi.Enter += new System.EventHandler(this.tbTi_Enter);
+            this.tbTi.KeyDown += new System.Windows.Forms.KeyEventHandler(this.tbTi_KeyDown);
+            this.tbTi.Leave += new System.EventHandler(this.tbTi_Leave);
+            // 
+            // lbK
+            // 
+            this.lbK.AutoSize = true;
+            this.lbK.Location = new System.Drawing.Point(171, 206);
+            this.lbK.Name = "lbK";
+            this.lbK.Size = new System.Drawing.Size(14, 13);
+            this.lbK.TabIndex = 8;
+            this.lbK.Text = "K";
+            // 
+            // tbK
+            // 
+            this.tbK.Location = new System.Drawing.Point(198, 203);
+            this.tbK.Name = "tbK";
+            this.tbK.Size = new System.Drawing.Size(171, 20);
+            this.tbK.TabIndex = 7;
+            this.tbK.Enter += new System.EventHandler(this.tbK_Enter);
+            this.tbK.KeyDown += new System.Windows.Forms.KeyEventHandler(this.tbK_KeyDown);
+            this.tbK.Leave += new System.EventHandler(this.tbK_Leave);
+            // 
+            // lbYmin
+            // 
+            this.lbYmin.AutoSize = true;
+            this.lbYmin.Location = new System.Drawing.Point(162, 336);
+            this.lbYmin.Name = "lbYmin";
+            this.lbYmin.Size = new System.Drawing.Size(30, 13);
+            this.lbYmin.TabIndex = 18;
+            this.lbYmin.Text = "Ymin";
+            // 
+            // tbYmin
+            // 
+            this.tbYmin.Location = new System.Drawing.Point(198, 333);
+            this.tbYmin.Name = "tbYmin";
+            this.tbYmin.Size = new System.Drawing.Size(171, 20);
+            this.tbYmin.TabIndex = 17;
+            this.tbYmin.Enter += new System.EventHandler(this.tbYmin_Enter);
+            this.tbYmin.KeyDown += new System.Windows.Forms.KeyEventHandler(this.tbYmin_KeyDown);
+            this.tbYmin.Leave += new System.EventHandler(this.tbYmin_Leave);
+            // 
+            // lbYmax
+            // 
+            this.lbYmax.AutoSize = true;
+            this.lbYmax.Location = new System.Drawing.Point(162, 310);
+            this.lbYmax.Name = "lbYmax";
+            this.lbYmax.Size = new System.Drawing.Size(33, 13);
+            this.lbYmax.TabIndex = 16;
+            this.lbYmax.Text = "Ymax";
+            // 
+            // tbYmax
+            // 
+            this.tbYmax.Location = new System.Drawing.Point(198, 307);
+            this.tbYmax.Name = "tbYmax";
+            this.tbYmax.Size = new System.Drawing.Size(171, 20);
+            this.tbYmax.TabIndex = 15;
+            this.tbYmax.Enter += new System.EventHandler(this.tbYmax_Enter);
+            this.tbYmax.KeyDown += new System.Windows.Forms.KeyEventHandler(this.tbYmax_KeyDown);
+            this.tbYmax.Leave += new System.EventHandler(this.tbYmax_Leave);
+            // 
+            // lbTd
+            // 
+            this.lbTd.AutoSize = true;
+            this.lbTd.Location = new System.Drawing.Point(171, 284);
+            this.lbTd.Name = "lbTd";
+            this.lbTd.Size = new System.Drawing.Size(20, 13);
+            this.lbTd.TabIndex = 14;
+            this.lbTd.Text = "Td";
+            // 
+            // tbTd
+            // 
+            this.tbTd.Location = new System.Drawing.Point(198, 281);
+            this.tbTd.Name = "tbTd";
+            this.tbTd.Size = new System.Drawing.Size(171, 20);
+            this.tbTd.TabIndex = 13;
+            this.tbTd.Enter += new System.EventHandler(this.tbTd_Enter);
+            this.tbTd.KeyDown += new System.Windows.Forms.KeyEventHandler(this.tbTd_KeyDown);
+            this.tbTd.Leave += new System.EventHandler(this.tbTd_Leave);
+            // 
+            // lbDeadband
+            // 
+            this.lbDeadband.AutoSize = true;
+            this.lbDeadband.Location = new System.Drawing.Point(138, 362);
+            this.lbDeadband.Name = "lbDeadband";
+            this.lbDeadband.Size = new System.Drawing.Size(57, 13);
+            this.lbDeadband.TabIndex = 20;
+            this.lbDeadband.Text = "Deadband";
+            // 
+            // tbDeadband
+            // 
+            this.tbDeadband.Location = new System.Drawing.Point(198, 359);
+            this.tbDeadband.Name = "tbDeadband";
+            this.tbDeadband.Size = new System.Drawing.Size(171, 20);
+            this.tbDeadband.TabIndex = 19;
+            this.tbDeadband.Enter += new System.EventHandler(this.tbDeadband_Enter);
+            this.tbDeadband.KeyDown += new System.Windows.Forms.KeyEventHandler(this.tbDeadband_KeyDown);
+            this.tbDeadband.Leave += new System.EventHandler(this.tbDeadband_Leave);
+            // 
+            // cbDerivative
+            // 
+            this.cbDerivative.AutoSize = true;
+            this.cbDerivative.Location = new System.Drawing.Point(375, 284);
+            this.cbDerivative.Name = "cbDerivative";
+            this.cbDerivative.Size = new System.Drawing.Size(129, 17);
+            this.cbDerivative.TabIndex = 21;
+            this.cbDerivative.Text = "Enable derivative part";
+            this.cbDerivative.UseVisualStyleBackColor = true;
+            // 
             // Form1
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(800, 450);
+            this.Controls.Add(this.cbDerivative);
+            this.Controls.Add(this.lbDeadband);
+            this.Controls.Add(this.tbDeadband);
+            this.Controls.Add(this.lbYmin);
+            this.Controls.Add(this.tbYmin);
+            this.Controls.Add(this.lbYmax);
+            this.Controls.Add(this.tbYmax);
+            this.Controls.Add(this.lbTd);
+            this.Controls.Add(this.tbTd);
+            this.Controls.Add(this.lbTlag);
+            this.Controls.Add(this.tbTlag);
+            this.Controls.Add(this.lbTi);
+            this.Controls.Add(this.tbTi);
+            this.Controls.Add(this.lbK);
+            this.Controls.Add(this.tbK);
             this.Controls.Add(this.lbOUT);
             this.Controls.Add(this.tbOUT);
             this.Controls.Add(this.lbSP);
@@ -136,6 +310,21 @@
         private System.Windows.Forms.Label lbOUT;
         private System.Windows.Forms.TextBox tbOUT;
         private System.Windows.Forms.Timer timer1;
+        private System.Windows.Forms.Label lbTlag;
+        private System.Windows.Forms.TextBox tbTlag;
+        private System.Windows.Forms.Label lbTi;
+        private System.Windows.Forms.TextBox tbTi;
+        private System.Windows.Forms.Label lbK;
+        private System.Windows.Forms.TextBox tbK;
+        private System.Windows.Forms.Label lbYmin;
+        private System.Windows.Forms.TextBox tbYmin;
+        private System.Windows.Forms.Label lbYmax;
+        private System.Windows.Forms.TextBox tbYmax;
+        private System.Windows.Forms.Label lbTd;
+        private System.Windows.Forms.TextBox tbTd;
+        private System.Windows.Forms.Label lbDeadband;
+        private System.Windows.Forms.TextBox tbDeadband;
+        private System.Windows.Forms.CheckBox cbDerivative;
     }
 }
 
