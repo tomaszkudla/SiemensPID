@@ -16,16 +16,18 @@ namespace SiemensPID
         PID pid;
         double temp;
         Trend trend;
-
+        OscillatingObject oo;
 
         public Form1()
         {
             InitializeComponent();
             trend = new Trend();
             pid = new PID { CYCLE = 100, GAIN = 0.1, I_SEL = true, P_SEL = true, TI = 100.0 , PV_IN = 90.0, SP_INT=95.0, MAN_ON=false};
+            oo = new OscillatingObject();
             cbHand.Checked = pid.MAN_ON;
             tbPV.Text = pid.PV_IN.ToString("F5");
             tbSP.Text = pid.SP_INT.ToString("F5");
+            tbOUTman.Text = pid.MAN.ToString("F5");
             tbK.Text = pid.GAIN.ToString("F5");
             tbTi.Text = pid.TI.ToString("F5");
             tbTlag.Text = pid.TM_LAG.ToString("F5");
@@ -88,9 +90,12 @@ namespace SiemensPID
         private void timer1_Tick(object sender, EventArgs e)
         {
             pid.Go();
+            pid.PV_IN = oo.X(pid.LMN);
+            tbPV.Text = pid.PV_IN.ToString("F5");
+
             tbOUT.Text = pid.LMN.ToString("F5");
             trend.AddPoints(pid.PV_IN,pid.SP_INT,pid.LMN);
-            //panel1.Invalidate();
+            
             for (int i = 0; i < 1000; i++)
             {
                 chart1.Series[0].Points[i] = new DataPoint((float)((1000-i)*(-0.1)), (float)trend.PV[i]);
@@ -368,6 +373,39 @@ namespace SiemensPID
         private void tbPV_Click(object sender, EventArgs e)
         {
             tbPV.Text = "";
+        }
+
+        private void tbOUTman_Enter(object sender, EventArgs e)
+        {
+            tbOUTman.Text = "";
+        }
+
+        private void tbOUTman_Leave(object sender, EventArgs e)
+        {
+            tbOUTman.Text = pid.MAN.ToString("F5");
+        }
+
+        private void tbOUTman_KeyDown(object sender, KeyEventArgs e)
+        {
+            if (e.KeyCode.Equals(Keys.Enter))
+            {
+                if (double.TryParse(tbOUTman.Text, out temp))
+                {
+                    pid.MAN = temp;
+                    tbOUTman.Text = pid.MAN.ToString("F5");
+                    tbOUTman.BackColor = Color.White;
+                }
+                else
+                {
+                    tbOUTman.BackColor = Color.LightPink;
+                }
+
+            }
+        }
+
+        private void tbOUTman_Click(object sender, EventArgs e)
+        {
+            tbOUTman.Text = "";
         }
     }
 }

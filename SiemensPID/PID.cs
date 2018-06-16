@@ -343,6 +343,7 @@ namespace SiemensPID
                 if (MAN_ON)   // Jeśli tryb ręczny
                 {
                     dLmn= MAN;      // Wyjście w trybie ręcznym
+                    LMN = dLmn;
                 }
                 else
                 {
@@ -421,7 +422,7 @@ namespace SiemensPID
                     LMN_PER= (int)dLmn;
                 }
             }
-
+            
         }
         
     }

@@ -29,9 +29,9 @@
         private void InitializeComponent()
         {
             this.components = new System.ComponentModel.Container();
-            System.Windows.Forms.DataVisualization.Charting.ChartArea chartArea1 = new System.Windows.Forms.DataVisualization.Charting.ChartArea();
-            System.Windows.Forms.DataVisualization.Charting.Legend legend1 = new System.Windows.Forms.DataVisualization.Charting.Legend();
-            System.Windows.Forms.DataVisualization.Charting.Series series1 = new System.Windows.Forms.DataVisualization.Charting.Series();
+            System.Windows.Forms.DataVisualization.Charting.ChartArea chartArea4 = new System.Windows.Forms.DataVisualization.Charting.ChartArea();
+            System.Windows.Forms.DataVisualization.Charting.Legend legend4 = new System.Windows.Forms.DataVisualization.Charting.Legend();
+            System.Windows.Forms.DataVisualization.Charting.Series series4 = new System.Windows.Forms.DataVisualization.Charting.Series();
             this.cbHand = new System.Windows.Forms.CheckBox();
             this.tbPV = new System.Windows.Forms.TextBox();
             this.lbPV = new System.Windows.Forms.Label();
@@ -56,13 +56,15 @@
             this.tbDeadband = new System.Windows.Forms.TextBox();
             this.cbDerivative = new System.Windows.Forms.CheckBox();
             this.chart1 = new System.Windows.Forms.DataVisualization.Charting.Chart();
+            this.lbOUTman = new System.Windows.Forms.Label();
+            this.tbOUTman = new System.Windows.Forms.TextBox();
             ((System.ComponentModel.ISupportInitialize)(this.chart1)).BeginInit();
             this.SuspendLayout();
             // 
             // cbHand
             // 
             this.cbHand.AutoSize = true;
-            this.cbHand.Location = new System.Drawing.Point(173, 34);
+            this.cbHand.Location = new System.Drawing.Point(173, 29);
             this.cbHand.Name = "cbHand";
             this.cbHand.Size = new System.Drawing.Size(81, 17);
             this.cbHand.TabIndex = 0;
@@ -72,7 +74,7 @@
             // 
             // tbPV
             // 
-            this.tbPV.Location = new System.Drawing.Point(83, 83);
+            this.tbPV.Location = new System.Drawing.Point(83, 52);
             this.tbPV.Name = "tbPV";
             this.tbPV.Size = new System.Drawing.Size(171, 20);
             this.tbPV.TabIndex = 1;
@@ -84,7 +86,7 @@
             // lbPV
             // 
             this.lbPV.AutoSize = true;
-            this.lbPV.Location = new System.Drawing.Point(56, 86);
+            this.lbPV.Location = new System.Drawing.Point(56, 55);
             this.lbPV.Name = "lbPV";
             this.lbPV.Size = new System.Drawing.Size(21, 13);
             this.lbPV.TabIndex = 2;
@@ -93,7 +95,7 @@
             // lbSP
             // 
             this.lbSP.AutoSize = true;
-            this.lbSP.Location = new System.Drawing.Point(56, 112);
+            this.lbSP.Location = new System.Drawing.Point(56, 81);
             this.lbSP.Name = "lbSP";
             this.lbSP.Size = new System.Drawing.Size(21, 13);
             this.lbSP.TabIndex = 4;
@@ -101,7 +103,7 @@
             // 
             // tbSP
             // 
-            this.tbSP.Location = new System.Drawing.Point(83, 109);
+            this.tbSP.Location = new System.Drawing.Point(83, 78);
             this.tbSP.Name = "tbSP";
             this.tbSP.Size = new System.Drawing.Size(171, 20);
             this.tbSP.TabIndex = 3;
@@ -113,7 +115,7 @@
             // lbOUT
             // 
             this.lbOUT.AutoSize = true;
-            this.lbOUT.Location = new System.Drawing.Point(47, 138);
+            this.lbOUT.Location = new System.Drawing.Point(47, 107);
             this.lbOUT.Name = "lbOUT";
             this.lbOUT.Size = new System.Drawing.Size(30, 13);
             this.lbOUT.TabIndex = 6;
@@ -121,7 +123,7 @@
             // 
             // tbOUT
             // 
-            this.tbOUT.Location = new System.Drawing.Point(83, 135);
+            this.tbOUT.Location = new System.Drawing.Point(83, 104);
             this.tbOUT.Name = "tbOUT";
             this.tbOUT.Size = new System.Drawing.Size(171, 20);
             this.tbOUT.TabIndex = 5;
@@ -275,26 +277,48 @@
             // 
             // chart1
             // 
-            chartArea1.Name = "ChartArea1";
-            this.chart1.ChartAreas.Add(chartArea1);
+            chartArea4.Name = "ChartArea1";
+            this.chart1.ChartAreas.Add(chartArea4);
             this.chart1.Cursor = System.Windows.Forms.Cursors.IBeam;
-            legend1.Name = "Legend1";
-            this.chart1.Legends.Add(legend1);
+            legend4.Name = "Legend1";
+            this.chart1.Legends.Add(legend4);
             this.chart1.Location = new System.Drawing.Point(395, 12);
             this.chart1.Name = "chart1";
-            series1.ChartArea = "ChartArea1";
-            series1.Legend = "Legend1";
-            series1.Name = "Series1";
-            this.chart1.Series.Add(series1);
+            series4.ChartArea = "ChartArea1";
+            series4.Legend = "Legend1";
+            series4.Name = "Series1";
+            this.chart1.Series.Add(series4);
             this.chart1.Size = new System.Drawing.Size(623, 426);
             this.chart1.TabIndex = 23;
             this.chart1.Text = "chart1";
+            // 
+            // lbOUTman
+            // 
+            this.lbOUTman.AutoSize = true;
+            this.lbOUTman.Location = new System.Drawing.Point(24, 133);
+            this.lbOUTman.Name = "lbOUTman";
+            this.lbOUTman.Size = new System.Drawing.Size(56, 13);
+            this.lbOUTman.TabIndex = 25;
+            this.lbOUTman.Text = " OUT man";
+            // 
+            // tbOUTman
+            // 
+            this.tbOUTman.Location = new System.Drawing.Point(83, 130);
+            this.tbOUTman.Name = "tbOUTman";
+            this.tbOUTman.Size = new System.Drawing.Size(171, 20);
+            this.tbOUTman.TabIndex = 24;
+            this.tbOUTman.Click += new System.EventHandler(this.tbOUTman_Click);
+            this.tbOUTman.Enter += new System.EventHandler(this.tbOUTman_Enter);
+            this.tbOUTman.KeyDown += new System.Windows.Forms.KeyEventHandler(this.tbOUTman_KeyDown);
+            this.tbOUTman.Leave += new System.EventHandler(this.tbOUTman_Leave);
             // 
             // Form1
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(1039, 450);
+            this.Controls.Add(this.lbOUTman);
+            this.Controls.Add(this.tbOUTman);
             this.Controls.Add(this.chart1);
             this.Controls.Add(this.cbDerivative);
             this.Controls.Add(this.lbDeadband);
@@ -352,6 +376,8 @@
         private System.Windows.Forms.TextBox tbDeadband;
         private System.Windows.Forms.CheckBox cbDerivative;
         private System.Windows.Forms.DataVisualization.Charting.Chart chart1;
+        private System.Windows.Forms.Label lbOUTman;
+        private System.Windows.Forms.TextBox tbOUTman;
     }
 }
 
