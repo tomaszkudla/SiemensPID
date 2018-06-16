@@ -29,6 +29,9 @@
         private void InitializeComponent()
         {
             this.components = new System.ComponentModel.Container();
+            System.Windows.Forms.DataVisualization.Charting.ChartArea chartArea1 = new System.Windows.Forms.DataVisualization.Charting.ChartArea();
+            System.Windows.Forms.DataVisualization.Charting.Legend legend1 = new System.Windows.Forms.DataVisualization.Charting.Legend();
+            System.Windows.Forms.DataVisualization.Charting.Series series1 = new System.Windows.Forms.DataVisualization.Charting.Series();
             this.cbHand = new System.Windows.Forms.CheckBox();
             this.tbPV = new System.Windows.Forms.TextBox();
             this.lbPV = new System.Windows.Forms.Label();
@@ -52,12 +55,14 @@
             this.lbDeadband = new System.Windows.Forms.Label();
             this.tbDeadband = new System.Windows.Forms.TextBox();
             this.cbDerivative = new System.Windows.Forms.CheckBox();
+            this.chart1 = new System.Windows.Forms.DataVisualization.Charting.Chart();
+            ((System.ComponentModel.ISupportInitialize)(this.chart1)).BeginInit();
             this.SuspendLayout();
             // 
             // cbHand
             // 
             this.cbHand.AutoSize = true;
-            this.cbHand.Location = new System.Drawing.Point(288, 44);
+            this.cbHand.Location = new System.Drawing.Point(173, 34);
             this.cbHand.Name = "cbHand";
             this.cbHand.Size = new System.Drawing.Size(81, 17);
             this.cbHand.TabIndex = 0;
@@ -67,10 +72,11 @@
             // 
             // tbPV
             // 
-            this.tbPV.Location = new System.Drawing.Point(198, 93);
+            this.tbPV.Location = new System.Drawing.Point(83, 83);
             this.tbPV.Name = "tbPV";
             this.tbPV.Size = new System.Drawing.Size(171, 20);
             this.tbPV.TabIndex = 1;
+            this.tbPV.Click += new System.EventHandler(this.tbPV_Click);
             this.tbPV.Enter += new System.EventHandler(this.tbPV_Enter);
             this.tbPV.KeyDown += new System.Windows.Forms.KeyEventHandler(this.tbPV_KeyDown);
             this.tbPV.Leave += new System.EventHandler(this.tbPV_Leave);
@@ -78,7 +84,7 @@
             // lbPV
             // 
             this.lbPV.AutoSize = true;
-            this.lbPV.Location = new System.Drawing.Point(171, 96);
+            this.lbPV.Location = new System.Drawing.Point(56, 86);
             this.lbPV.Name = "lbPV";
             this.lbPV.Size = new System.Drawing.Size(21, 13);
             this.lbPV.TabIndex = 2;
@@ -87,7 +93,7 @@
             // lbSP
             // 
             this.lbSP.AutoSize = true;
-            this.lbSP.Location = new System.Drawing.Point(171, 122);
+            this.lbSP.Location = new System.Drawing.Point(56, 112);
             this.lbSP.Name = "lbSP";
             this.lbSP.Size = new System.Drawing.Size(21, 13);
             this.lbSP.TabIndex = 4;
@@ -95,10 +101,11 @@
             // 
             // tbSP
             // 
-            this.tbSP.Location = new System.Drawing.Point(198, 119);
+            this.tbSP.Location = new System.Drawing.Point(83, 109);
             this.tbSP.Name = "tbSP";
             this.tbSP.Size = new System.Drawing.Size(171, 20);
             this.tbSP.TabIndex = 3;
+            this.tbSP.Click += new System.EventHandler(this.tbSP_Click);
             this.tbSP.Enter += new System.EventHandler(this.tbSP_Enter);
             this.tbSP.KeyDown += new System.Windows.Forms.KeyEventHandler(this.tbSP_KeyDown);
             this.tbSP.Leave += new System.EventHandler(this.tbSP_Leave);
@@ -106,7 +113,7 @@
             // lbOUT
             // 
             this.lbOUT.AutoSize = true;
-            this.lbOUT.Location = new System.Drawing.Point(162, 148);
+            this.lbOUT.Location = new System.Drawing.Point(47, 138);
             this.lbOUT.Name = "lbOUT";
             this.lbOUT.Size = new System.Drawing.Size(30, 13);
             this.lbOUT.TabIndex = 6;
@@ -114,7 +121,7 @@
             // 
             // tbOUT
             // 
-            this.tbOUT.Location = new System.Drawing.Point(198, 145);
+            this.tbOUT.Location = new System.Drawing.Point(83, 135);
             this.tbOUT.Name = "tbOUT";
             this.tbOUT.Size = new System.Drawing.Size(171, 20);
             this.tbOUT.TabIndex = 5;
@@ -126,7 +133,7 @@
             // lbTlag
             // 
             this.lbTlag.AutoSize = true;
-            this.lbTlag.Location = new System.Drawing.Point(162, 258);
+            this.lbTlag.Location = new System.Drawing.Point(47, 248);
             this.lbTlag.Name = "lbTlag";
             this.lbTlag.Size = new System.Drawing.Size(31, 13);
             this.lbTlag.TabIndex = 12;
@@ -134,7 +141,7 @@
             // 
             // tbTlag
             // 
-            this.tbTlag.Location = new System.Drawing.Point(198, 255);
+            this.tbTlag.Location = new System.Drawing.Point(83, 245);
             this.tbTlag.Name = "tbTlag";
             this.tbTlag.Size = new System.Drawing.Size(171, 20);
             this.tbTlag.TabIndex = 11;
@@ -145,7 +152,7 @@
             // lbTi
             // 
             this.lbTi.AutoSize = true;
-            this.lbTi.Location = new System.Drawing.Point(171, 232);
+            this.lbTi.Location = new System.Drawing.Point(56, 222);
             this.lbTi.Name = "lbTi";
             this.lbTi.Size = new System.Drawing.Size(16, 13);
             this.lbTi.TabIndex = 10;
@@ -153,7 +160,7 @@
             // 
             // tbTi
             // 
-            this.tbTi.Location = new System.Drawing.Point(198, 229);
+            this.tbTi.Location = new System.Drawing.Point(83, 219);
             this.tbTi.Name = "tbTi";
             this.tbTi.Size = new System.Drawing.Size(171, 20);
             this.tbTi.TabIndex = 9;
@@ -164,7 +171,7 @@
             // lbK
             // 
             this.lbK.AutoSize = true;
-            this.lbK.Location = new System.Drawing.Point(171, 206);
+            this.lbK.Location = new System.Drawing.Point(56, 196);
             this.lbK.Name = "lbK";
             this.lbK.Size = new System.Drawing.Size(14, 13);
             this.lbK.TabIndex = 8;
@@ -172,7 +179,7 @@
             // 
             // tbK
             // 
-            this.tbK.Location = new System.Drawing.Point(198, 203);
+            this.tbK.Location = new System.Drawing.Point(83, 193);
             this.tbK.Name = "tbK";
             this.tbK.Size = new System.Drawing.Size(171, 20);
             this.tbK.TabIndex = 7;
@@ -183,7 +190,7 @@
             // lbYmin
             // 
             this.lbYmin.AutoSize = true;
-            this.lbYmin.Location = new System.Drawing.Point(162, 336);
+            this.lbYmin.Location = new System.Drawing.Point(47, 326);
             this.lbYmin.Name = "lbYmin";
             this.lbYmin.Size = new System.Drawing.Size(30, 13);
             this.lbYmin.TabIndex = 18;
@@ -191,7 +198,7 @@
             // 
             // tbYmin
             // 
-            this.tbYmin.Location = new System.Drawing.Point(198, 333);
+            this.tbYmin.Location = new System.Drawing.Point(83, 323);
             this.tbYmin.Name = "tbYmin";
             this.tbYmin.Size = new System.Drawing.Size(171, 20);
             this.tbYmin.TabIndex = 17;
@@ -202,7 +209,7 @@
             // lbYmax
             // 
             this.lbYmax.AutoSize = true;
-            this.lbYmax.Location = new System.Drawing.Point(162, 310);
+            this.lbYmax.Location = new System.Drawing.Point(47, 300);
             this.lbYmax.Name = "lbYmax";
             this.lbYmax.Size = new System.Drawing.Size(33, 13);
             this.lbYmax.TabIndex = 16;
@@ -210,7 +217,7 @@
             // 
             // tbYmax
             // 
-            this.tbYmax.Location = new System.Drawing.Point(198, 307);
+            this.tbYmax.Location = new System.Drawing.Point(83, 297);
             this.tbYmax.Name = "tbYmax";
             this.tbYmax.Size = new System.Drawing.Size(171, 20);
             this.tbYmax.TabIndex = 15;
@@ -221,7 +228,7 @@
             // lbTd
             // 
             this.lbTd.AutoSize = true;
-            this.lbTd.Location = new System.Drawing.Point(171, 284);
+            this.lbTd.Location = new System.Drawing.Point(56, 274);
             this.lbTd.Name = "lbTd";
             this.lbTd.Size = new System.Drawing.Size(20, 13);
             this.lbTd.TabIndex = 14;
@@ -229,7 +236,7 @@
             // 
             // tbTd
             // 
-            this.tbTd.Location = new System.Drawing.Point(198, 281);
+            this.tbTd.Location = new System.Drawing.Point(83, 271);
             this.tbTd.Name = "tbTd";
             this.tbTd.Size = new System.Drawing.Size(171, 20);
             this.tbTd.TabIndex = 13;
@@ -240,7 +247,7 @@
             // lbDeadband
             // 
             this.lbDeadband.AutoSize = true;
-            this.lbDeadband.Location = new System.Drawing.Point(138, 362);
+            this.lbDeadband.Location = new System.Drawing.Point(23, 352);
             this.lbDeadband.Name = "lbDeadband";
             this.lbDeadband.Size = new System.Drawing.Size(57, 13);
             this.lbDeadband.TabIndex = 20;
@@ -248,7 +255,7 @@
             // 
             // tbDeadband
             // 
-            this.tbDeadband.Location = new System.Drawing.Point(198, 359);
+            this.tbDeadband.Location = new System.Drawing.Point(83, 349);
             this.tbDeadband.Name = "tbDeadband";
             this.tbDeadband.Size = new System.Drawing.Size(171, 20);
             this.tbDeadband.TabIndex = 19;
@@ -259,18 +266,36 @@
             // cbDerivative
             // 
             this.cbDerivative.AutoSize = true;
-            this.cbDerivative.Location = new System.Drawing.Point(375, 284);
+            this.cbDerivative.Location = new System.Drawing.Point(260, 274);
             this.cbDerivative.Name = "cbDerivative";
             this.cbDerivative.Size = new System.Drawing.Size(129, 17);
             this.cbDerivative.TabIndex = 21;
             this.cbDerivative.Text = "Enable derivative part";
             this.cbDerivative.UseVisualStyleBackColor = true;
             // 
+            // chart1
+            // 
+            chartArea1.Name = "ChartArea1";
+            this.chart1.ChartAreas.Add(chartArea1);
+            this.chart1.Cursor = System.Windows.Forms.Cursors.IBeam;
+            legend1.Name = "Legend1";
+            this.chart1.Legends.Add(legend1);
+            this.chart1.Location = new System.Drawing.Point(395, 12);
+            this.chart1.Name = "chart1";
+            series1.ChartArea = "ChartArea1";
+            series1.Legend = "Legend1";
+            series1.Name = "Series1";
+            this.chart1.Series.Add(series1);
+            this.chart1.Size = new System.Drawing.Size(623, 426);
+            this.chart1.TabIndex = 23;
+            this.chart1.Text = "chart1";
+            // 
             // Form1
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(800, 450);
+            this.ClientSize = new System.Drawing.Size(1039, 450);
+            this.Controls.Add(this.chart1);
             this.Controls.Add(this.cbDerivative);
             this.Controls.Add(this.lbDeadband);
             this.Controls.Add(this.tbDeadband);
@@ -295,6 +320,7 @@
             this.Controls.Add(this.cbHand);
             this.Name = "Form1";
             this.Text = "Form1";
+            ((System.ComponentModel.ISupportInitialize)(this.chart1)).EndInit();
             this.ResumeLayout(false);
             this.PerformLayout();
 
@@ -325,6 +351,7 @@
         private System.Windows.Forms.Label lbDeadband;
         private System.Windows.Forms.TextBox tbDeadband;
         private System.Windows.Forms.CheckBox cbDerivative;
+        private System.Windows.Forms.DataVisualization.Charting.Chart chart1;
     }
 }
 
