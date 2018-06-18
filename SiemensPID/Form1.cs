@@ -22,7 +22,7 @@ namespace SiemensPID
         {
             InitializeComponent();
             trend = new Trend();
-            pid = new PID { CYCLE = 100, GAIN = 0.1, I_SEL = true, P_SEL = true, TI = 100.0 , PV_IN = 90.0, SP_INT=95.0, MAN_ON=false};
+            pid = new PID { CYCLE = 100, GAIN = 0.05, I_SEL = true, P_SEL = true, TI = 2000.0, SP_INT=50.0, MAN_ON=false};  //presetting PID paramaters
             oo = new OscillatingObject();
             cbHand.Checked = pid.MAN_ON;
             tbPV.Text = pid.PV_IN.ToString("F5");
@@ -37,30 +37,30 @@ namespace SiemensPID
             tbDeadband.Text = pid.DEADB_W.ToString("F5");
             timer1.Start();
 
-
+            //trend configuration
             chart1.Series.Clear();
-            var seriesPV = new System.Windows.Forms.DataVisualization.Charting.Series
+            var seriesPV = new Series
             {
                 Name = "PV",
-                Color = System.Drawing.Color.Green,
+                Color = Color.Green,
                 IsVisibleInLegend = true,
                 IsXValueIndexed = true,
                 ChartType = SeriesChartType.Line
             };
 
-            var seriesSP = new System.Windows.Forms.DataVisualization.Charting.Series
+            var seriesSP = new Series
             {
                 Name = "SP",
-                Color = System.Drawing.Color.Blue,
+                Color = Color.Blue,
                 IsVisibleInLegend = true,
                 IsXValueIndexed = true,
                 ChartType = SeriesChartType.Line
             };
 
-            var seriesOUT = new System.Windows.Forms.DataVisualization.Charting.Series
+            var seriesOUT = new Series
             {
                 Name = "OUT",
-                Color = System.Drawing.Color.Red,
+                Color = Color.Red,
                 IsVisibleInLegend = true,
                 IsXValueIndexed = true,
                 ChartType = SeriesChartType.Line             
@@ -77,9 +77,7 @@ namespace SiemensPID
                 seriesSP.Points.AddXY(i, 100);
                 seriesOUT.Points.AddXY(i, 100);
             }
-            //chart1.Invalidate();
-
-
+            
         }
 
         private void cbHand_CheckedChanged(object sender, EventArgs e)
@@ -90,23 +88,23 @@ namespace SiemensPID
         private void timer1_Tick(object sender, EventArgs e)
         {
             pid.Go();
-            pid.PV_IN = oo.X(pid.LMN);
+            pid.PV_IN = oo.X(pid.LMN);  //simulation
             tbPV.Text = pid.PV_IN.ToString("F5");
 
             tbOUT.Text = pid.LMN.ToString("F5");
             trend.AddPoints(pid.PV_IN,pid.SP_INT,pid.LMN);
             
+            //drawing trends for new sample
             for (int i = 0; i < 1000; i++)
             {
-                chart1.Series[0].Points[i] = new DataPoint((float)((1000-i)*(-0.1)), (float)trend.PV[i]);
+                chart1.Series[0].Points[i] = new DataPoint((float)((1000 - i) * (-0.1)), (float)trend.PV[i]);
                 chart1.Series[1].Points[i] = new DataPoint((float)((1000 - i) * (-0.1)), (float)trend.SP[i]);
                 chart1.Series[2].Points[i] = new DataPoint((float)((1000 - i) * (-0.1)), (float)trend.OUT[i]);
             }
-               
             chart1.Invalidate();
-
         }
 
+        //handling user input
         private void tbPV_KeyDown(object sender, KeyEventArgs e)
         {
             if (e.KeyCode.Equals(Keys.Enter))
@@ -354,16 +352,6 @@ namespace SiemensPID
             tbPV.Text = pid.SP_INT.ToString("F5");
         }
 
-        private void panel1_Paint(object sender, PaintEventArgs e)
-        {
-            for(int i=0; i < trend.OUT.Length; i++)
-            {
-                Pen pen = new Pen(Color.Red, 1);
-                //e.Graphics.DrawEllipse(pen, i, (int)(trend.y[i]), 2, 2);
-                int y = (int)(trend.OUT[i]);
-                e.Graphics.DrawLine(pen, y+2, y+2, y + 3, y + 3);
-            }
-        }
 
         private void tbSP_Click(object sender, EventArgs e)
         {

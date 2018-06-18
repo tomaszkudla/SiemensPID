@@ -31,7 +31,6 @@ namespace SiemensPID
             qOUT.Enqueue(outY);
             qOUT.Dequeue();
             OUT = qOUT.ToArray();
-
         }
     }
 }

@@ -6,6 +6,9 @@ using System.Threading.Tasks;
 
 namespace SiemensPID
 {
+    /// <summary>
+    /// PID controller from Siemens Step 7 library (FB41 CONT_C) - code from http://plc4good.org.ua/view_post.php?id=51 translated to C#
+    /// </summary>
     class PID
     {
 
@@ -196,48 +199,47 @@ namespace SiemensPID
         double sRestDif;                
         double sRueck;               
         double sLmn;                  
-        bool sbArwHLmOn;                              //Osiągnięto max wyjścia
-        bool sbArwLLmOn;                             //Osiągnięto min wyjścia 
+        bool sbArwHLmOn;            //Output max reached
+        bool sbArwLLmOn;            //Output min reached 
         bool sbILimOn = true;
 
         //VAR_TEMP
 
-        double Hvar;                                   //Zmienna pomocnicza
-        double rCycle;                                  //Czas cyklu w sekundach
-        double Diff;                                    //Różnica
-        double Istwert;                                //Wartość mierzona
-        double ErKp;                                   //Uchyb * wzmocnienie 
-        double rTi;                                  //Czas całkowania w sekundach
-        double rTd;                                  //Czas różniczkowania w sekundach
-        double rTmLag;                               //Opóźnienie różniczkowania w sekundach
-        double Panteil;                             //Komponent P
-        double Ianteil;                             //Komponent I
-        double Danteil;                           //Komponent D
-        double Verstaerk;                          //Wzmocnienie
-        double RueckDiff;                            //Różnica do komponentu D
-        double RueckAlt;                             //Stara pochodna
-        double dLmn;                              //Wyjście regulatora
-        double gf;                                //Zmienna pomocnicza
-        double rVal;                                  //Zmienna pomocnicza
+        double Hvar;                //Ancillary variable
+        double rCycle;              //Cycle time in seconds
+        double Diff;                //Difference
+        double Istwert;             //Process variable
+        double ErKp;                //Error * gain 
+        double rTi;                 //Integration time in seconds
+        double rTd;                 //Derivation time in seconds
+        double rTmLag;              //Derivation lag in seconds
+        double Panteil;             //P component
+        double Ianteil;             //I component
+        double Danteil;             //D component
+        double Verstaerk;           //Gain
+        double RueckDiff;           //Difference for D component
+        double RueckAlt;            //Old derivative
+        double dLmn;                //Controller's output
+        double gf;                  //Ancillary variable
+        double rVal;                //Ancillary variable
 
-        //BEGIN
-
+        
         public void Go()
         {
 
             if (COM_RST)
             {
-                // Wyczyść zmienne
+                //Clearing fields
                 sIanteilAlt= I_ITLVAL;
-                LMN= 0.0;                                       //Wartość wyjściowa
-                QLMN_HLM= false;                                    //Górna granica wyjścia osiągnięta
-                QLMN_LLM= false;                                    //Dolna granica wyjścia osiągnięta
-                LMN_P= 0.0;                                     //Komponent P
-                LMN_I= 0.0;                                     //Komponent I
-                LMN_D= 0.0;                                     //Komponent D
-                LMN_PER= 0;                                     //Wartość wyjściowa do modułu AO
-                PV= 0.0;                                        //Wartość mierzona
-                ER= 0.0;                                        //Uchyb
+                LMN= 0.0;                     
+                QLMN_HLM= false;              
+                QLMN_LLM= false;             
+                LMN_P= 0.0;                   
+                LMN_I= 0.0;                   
+                LMN_D= 0.0;                   
+                LMN_PER= 0;                   
+                PV= 0.0;                      
+                ER= 0.0;                  
                 sInvAlt= 0.0;
                 sRestInt= 0.0;
                 sRestDif= 0.0;
@@ -249,31 +251,31 @@ namespace SiemensPID
             }
             else
             {
-                rCycle= CYCLE / 1000.0; // Czas realizacji bloku w sekundacch
-                Istwert = PV_PER * 100.0 / 27648.0;    // Pobiera wartość mierzoną z modułu
-                Istwert= Istwert * PV_FAC + PV_OFF;                             // Wartość mierzona skorygowana
-                if (!PVPER_ON) Istwert= PV_IN;                    // Jeśli wartość mierzona z modułu wyłączona - wziąć zmienną z PV_IN
-                PV = Istwert;                                                   // Wartość mierzona
-                ErKp= SP_INT - PV;                                              // Uchyb
-                if (ErKp< (-DEADB_W))  ER= ErKp + DEADB_W;             // Jeśli uchyb większy od strefy nieczułości
-                else if (ErKp > DEADB_W) ER= ErKp - DEADB_W;             // Zmniejszenie uchybu o strefę nieczułości
-                else ER= 0.0;                      // Zerowanie uchybu w strefie nieczułości
+                rCycle= CYCLE / 1000.0;  //Cycle time in seconds
+                Istwert = PV_PER * 100.0 / 27648.0;  //Scaling raw value from digital inputs module
+                Istwert= Istwert * PV_FAC + PV_OFF;  //Computing corrected PV
+                if (!PVPER_ON) Istwert= PV_IN;  //If raw value form DI module is not enabled, takes value from PV_IN
+                PV = Istwert;                                                   
+                ErKp= SP_INT - PV;  //Error computing
+                if (ErKp< (-DEADB_W))  ER= ErKp + DEADB_W;  //Error computing with deadband
+                else if (ErKp > DEADB_W) ER= ErKp - DEADB_W;            
+                else ER= 0.0;                      
                
-                ErKp= ER * GAIN;                                                // Uchyb * wzmocnienie
-                rTi= TI/ 1000.0;                   // Czas całkowania w sekundach
-                rTd= TD / 1000.0;                   // Czas różniczkowania w sekundach
-                rTmLag= TM_LAG / 1000.0;            // Czas opóźnienia różniczkowania w sekundach
-                                                                                 // Sprawdź dopuszczalny czas regulatora
-                if (rTi< (rCycle* 0.5)) rTi= rCycle * 0.5; // Minimalny czas całkowania - czas cyklu / 2
-                if (rTd<rCycle) rTd= rCycle; // Minimalny czas różniczkowania - czas cyklu
-                if (rTmLag<rCycle *0.5) rTmLag= rCycle * 0.5; // Minimalne opóźnienie różniczkowania - czas cyklu / 2
+                ErKp= ER * GAIN;   
+                rTi= TI/ 1000.0;  //Integration time in seconds
+                rTd= TD / 1000.0;  //Derivation time in seconds
+                rTmLag= TM_LAG / 1000.0;  //Derivation lag time in seconds
+                //Checking controller parameters
+                if (rTi< (rCycle* 0.5)) rTi= rCycle * 0.5;  //Minimum integration time = cycle time / 2
+                if (rTd<rCycle) rTd= rCycle;  //Minimum derivation time = cycle time
+                if (rTmLag<rCycle *0.5) rTmLag= rCycle * 0.5; //Minimum derivartion lag = cycle time / 2
 
                 //---------------------------------------------------------------------------------------------
-                // Obliczenie komponentu P
+                // Calculating P component
                 //---------------------------------------------------------------------------------------------    
                 if (P_SEL)
                 {
-                    Panteil= ErKp;                                              // Jeśli załączony komponent P
+                    Panteil= ErKp;  //If P component enabled
                 }
                 else
                 {
@@ -281,24 +283,24 @@ namespace SiemensPID
                 }
 
                 //---------------------------------------------------------------------------------------------
-                // Obliczenie komponentu I
+                // Calculating I component
                 //---------------------------------------------------------------------------------------------    
 
-                if (I_SEL) //Jeśli załączony komponent I
+                if (I_SEL)  //If I component enabled
                 {
-                    if (I_ITL_ON) //Inicjalizacja komponentu I
+                    if (I_ITL_ON)  //I component initialization
                     {
                         Ianteil = I_ITLVAL;
                         sRestInt = 0.0;
                     }
                     else
                     {
-                        if (MAN_ON) //Tryb ręczny
+                        if (MAN_ON)  //Manual mode
                         {
                             Ianteil = sLmn - Panteil - DISV;
                             sRestInt = 0.0;
                         }
-                        else     //Tryb auto
+                        else  //Auto mode
                         {
                             Diff = rCycle / rTi * (ErKp + sInvAlt) * 0.5 + sRestInt;
                             if (((Diff > 0.0) && sbArwHLmOn || INT_HOLD) || ((Diff < 0.0) && sbArwLLmOn))
@@ -317,7 +319,7 @@ namespace SiemensPID
                 }
 
                 //---------------------------------------------------------------------------------------------
-                //Obliczanie komponentu D
+                //Calculating D component
                 //---------------------------------------------------------------------------------------------    
                 Diff= ErKp;
                 if ((!MAN_ON) && D_SEL)
@@ -337,12 +339,12 @@ namespace SiemensPID
                 }
 
                 //---------------------------------------------------------------------------------------------
-                //Wypracowanie wyjścia
+                //Computing output
                 //---------------------------------------------------------------------------------------------
                 dLmn= Panteil + Ianteil + Danteil + DISV;
-                if (MAN_ON)   // Jeśli tryb ręczny
+                if (MAN_ON)  
                 {
-                    dLmn= MAN;      // Wyjście w trybie ręcznym
+                    dLmn= MAN;  //Output in manual mode
                     LMN = dLmn;
                 }
                 else
